@@ -1,0 +1,3 @@
+export const SET_ERROR = "SET_ERROR";
+export const CLEAR_NOTIFICATION = "CLEAR_NOTIFICATION";
+export const SET_SUCCESS = "SET_SUCCESS";
