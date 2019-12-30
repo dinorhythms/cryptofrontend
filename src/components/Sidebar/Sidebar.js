@@ -92,7 +92,6 @@ const useStyles = makeStyles(theme => ({
 
 export default function Dashboard({handleDrawerClose, open}) {
   const classes = useStyles();
-
   return (
     <Drawer
       variant="permanent"

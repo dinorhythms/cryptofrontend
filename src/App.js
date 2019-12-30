@@ -12,6 +12,8 @@ import PrivateLayout from "./utils/PrivateLayout";
 // views
 import SignIn from "./pages/sign-in/SignIn";
 import Dashboard from "./pages/dashboard/Dashboard";
+import Investments from "./pages/investments";
+import Investment from "./pages/investments/Investment";
 
 const adminRole = 'admin';
 const employeeRole = 'user';
@@ -23,6 +25,22 @@ function App(props) {
 				exact={true}
 				path="/dashboard"
 				component={Dashboard}
+				role={[employeeRole, adminRole]}
+				layout={PrivateLayout}
+				{...props}
+			/>
+			<PrivateRoute
+				exact={true}
+				path="/investments"
+				component={Investments}
+				role={[employeeRole, adminRole]}
+				layout={PrivateLayout}
+				{...props}
+			/>
+			<PrivateRoute
+				exact={true}
+				path="/investments/:investmentId"
+				component={Investment}
 				role={[employeeRole, adminRole]}
 				layout={PrivateLayout}
 				{...props}
