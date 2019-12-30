@@ -13,9 +13,18 @@ const initialState = {
 const notificationReducer = (state = initialState, action) => {
 	switch (action.type) {
 		case SET_ERROR: {
+			const error = action.payload;
+			let setError;
+			if(error.response){
+				setError = error.response.data.error;
+			} else if (error.request) {
+				setError = "Something went wrong, please try again";
+			} else {
+				setError = error.message;
+			}
 			return {
 				...state,
-				error: action.payload,
+				error: setError,
 				message: null
 			};
 		}

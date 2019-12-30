@@ -1,0 +1,4 @@
+export const WALLET_FETCH = 'WALLET_FETCH';
+export const WALLET_RESOLVE = 'WALLET_RESOLVE';
+export const WALLET_REJECT = 'WALLET_REJECT';
+export const WALLET_CANCEL = 'WALLET_CANCEL';

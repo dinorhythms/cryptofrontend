@@ -4,8 +4,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import Chart from './Chart';
-import Wallet from './Wallet';
-import Orders from './Orders';
+import Investments from '../investments';
 
 const drawerWidth = 240;
 
@@ -88,7 +87,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function Dashboard() {
+export default function Dashboard({history}) {
   const classes = useStyles();
 
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
@@ -96,21 +95,14 @@ export default function Dashboard() {
   return (
     <Grid container spacing={3}>
       {/* Chart */}
-      <Grid item xs={12} md={8} lg={9}>
+      <Grid item xs={12}>
         <Paper className={fixedHeightPaper}>
           <Chart />
         </Paper>
       </Grid>
-      {/* Recent Deposits */}
-      <Grid item xs={12} md={4} lg={3}>
-        <Paper className={fixedHeightPaper}>
-          <Wallet />
-        </Paper>
-      </Grid>
-      {/* Recent Orders */}
       <Grid item xs={12}>
         <Paper className={classes.paper}>
-          <Orders />
+          <Investments history={history} limit={5}/>
         </Paper>
       </Grid>
     </Grid>
