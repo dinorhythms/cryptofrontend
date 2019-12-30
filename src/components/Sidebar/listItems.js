@@ -8,6 +8,7 @@ import BarChartIcon from '@material-ui/icons/BarChart';
 import LayersIcon from '@material-ui/icons/Layers';
 import AssignmentIcon from '@material-ui/icons/Assignment';
 import { NavLink } from 'react-router-dom';
+import LockOpenIcon from '@material-ui/icons/LockOpen';
 
 export const mainListItems = (
   <React.Fragment>
@@ -27,15 +28,15 @@ export const mainListItems = (
       <ListItemIcon>
         <AssignmentIcon />
       </ListItemIcon>
-      <ListItemText primary="Investments" />
+      <ListItemText primary="Investments History" />
     </ListItem>
     <ListItem button>
       <ListItemIcon>
         <BarChartIcon />
       </ListItemIcon>
-      <ListItemText primary="Withdraw" />
+      <ListItemText primary="Withdraw Now" />
     </ListItem>
-    <ListItem button>
+    <ListItem button key="Withdrawals" component={NavLink} to="/withdrawals">
       <ListItemIcon>
         <LayersIcon />
       </ListItemIcon>
@@ -46,9 +47,9 @@ export const mainListItems = (
 
 export const secondaryListItems = (
   <div>
-    <ListItem button>
+    <ListItem button key="Signout" component={NavLink} to="/signout">
       <ListItemIcon>
-        <AssignmentIcon />
+        <LockOpenIcon />
       </ListItemIcon>
       <ListItemText primary="Signout" />
     </ListItem>

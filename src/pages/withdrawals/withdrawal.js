@@ -9,7 +9,6 @@ import { serverRequest } from '../../utils/serverRequest';
 import Skeleton from 'react-loading-skeleton';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
-import Countdown from 'react-countdown-now';
 import Typography from '@material-ui/core/Typography';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -19,7 +18,7 @@ import Table from '@material-ui/core/Table';
 
 import { SET_ERROR } from '../../store/types/notificationTypes';
 import { currencyFormat, formatDate } from '../../utils/helpers';
-import { INVESTMENT_FETCH, INVESTMENT_RESOLVE } from '../../store/types/investmentTypes';
+import { WITHDRAWAL_FETCH, WITHDRAWAL_RESOLVE } from '../../store/types/withdrawalsTypes';
 
 const useStyles = makeStyles(theme => ({
   count: {
@@ -57,24 +56,24 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function Investment({history, match}) {
+export default function Withdrawal({history, match}) {
   const classes = useStyles();
   const { user: { token } } = useSelector(state => state.auth);
-  const { investment, status } = useSelector(state => state.investment);
-  const { investmentId } = match.params;
+  const { withdrawal, status } = useSelector(state => state.withdrawal);
+  const { withdrawalId } = match.params;
   const dispatch = useDispatch();
   useEffect(() => {
     const getData = async () => {
       try {
-        dispatch({ type: INVESTMENT_FETCH });
-        const response = await serverRequest(token).get(`/investments/${investmentId}`);
-        dispatch({ type: INVESTMENT_RESOLVE, payload: response.data.data.investment})
+        dispatch({ type: WITHDRAWAL_FETCH });
+        const response = await serverRequest(token).get(`/withdrawals/${withdrawalId}`);
+        dispatch({ type: WITHDRAWAL_RESOLVE, payload: response.data.data.withdrawal})
       } catch (error) {
         dispatch({ type: SET_ERROR, payload: error });
       }
     }
     getData();
-  }, [token, dispatch, investmentId])
+  }, [token, dispatch, withdrawalId])
   
   if(status === 'idle' || status === 'loading'){
     return <Skeleton count={5} />
@@ -82,91 +81,55 @@ export default function Investment({history, match}) {
 
   const confirmation = (status, endTime) => {
     if(status === 'pending') return "Pending Confirmation";
-    if(status === 'settled') return "Investment Settled";
-    return <Countdown date={endTime} />
+    if(status === 'settled') return "Withdrawal Settled";
   }
 
   return (
     <Grid container spacing={3}>
       <Grid item xs={12}>
-      <Title><NavLink to="/investments">Back</NavLink> | Investment</Title>
+      <Title><NavLink to="/withdrawals">Back</NavLink> | Withdrawal</Title>
       <Paper className={classes.paper}>
         <Grid container spacing={3}>
-          <Grid item>
+          <Grid item xs>
             <Card className={classes.card} variant="outlined">
               <CardContent>
                 <Typography className={classes.title} color="textSecondary" gutterBottom>
                   Amount
                 </Typography>
                 <Typography variant="h5" component="h2">
-                  {currencyFormat(+investment.amount)}
+                  {currencyFormat(+withdrawal.amount)}
                 </Typography>
                 <Typography className={classes.pos} color="textSecondary">
                   
                 </Typography>
                 <Typography variant="body2" component="p" style={{marginTop: '15px'}}>
-                  Initial deposit on investment.
-                </Typography>
-              </CardContent>
-            </Card>
-          </Grid>
-          <Grid item>
-            <Card className={classes.card} variant="outlined">
-              <CardContent>
-                <Typography className={classes.title} color="textSecondary" gutterBottom>
-                  Total
-                </Typography>
-                <Typography variant="h5" component="h2">
-                  {currencyFormat(+investment.total)}
-                </Typography>
-                <Typography className={classes.pos} color="textSecondary">
-                  
-                </Typography>
-                <Typography variant="body2" component="p" style={{marginTop: '15px'}}>
-                  Total income on investment.
-                </Typography>
-              </CardContent>
-            </Card>
-          </Grid>
-          <Grid item>
-            <Card className={classes.card} variant="outlined">
-              <CardContent>
-                <Typography className={classes.title} color="textSecondary" gutterBottom>
-                  Profit
-                </Typography>
-                <Typography variant="h5" component="h2">
-                  {currencyFormat(+investment.profit)}
-                </Typography>
-                <Typography className={classes.pos} color="textSecondary">
-                  
-                </Typography>
-                <Typography variant="body2" component="p" style={{marginTop: '15px'}}>
-                  Your profit on investment.
+                  Requested amount.
                 </Typography>
               </CardContent>
             </Card>
           </Grid>
           <Grid item sm={12} className={classes.count}>
-            <h5>Cashout Time</h5>
+            <h5>Withdrawal Status</h5>
             <div className={classes.countdown}>
-              {confirmation(investment.status, investment.endTime)}
+              {confirmation(withdrawal.status, withdrawal.endTime)}
             </div>
-            {investment.status === 'pending'?(<p>Pay to: {investment.payToAccount.accountNo} to get confirmed.</p>):null}
             <Table>
           <TableHead>
             <TableRow>
               <TableCell>Date</TableCell>
-              <TableCell>Start</TableCell>
-              <TableCell>Cashout</TableCell>
+              <TableCell>Bank Name</TableCell>
+              <TableCell>Account Name</TableCell>
+              <TableCell>Account Nnumber</TableCell>
               <TableCell>Status</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
               <TableRow hover>
-                <TableCell>{formatDate(investment.createdAt)}</TableCell>
-                <TableCell>{formatDate(investment.startTime)}</TableCell>
-                <TableCell>{formatDate(investment.endTime)}</TableCell>
-                <TableCell style={{textTransform: 'capitalize'}}>{investment.status}</TableCell>
+                <TableCell>{formatDate(withdrawal.createdAt)}</TableCell>
+                <TableCell>{withdrawal.bankName}</TableCell>
+                <TableCell>{withdrawal.accountName}</TableCell>
+                <TableCell>{withdrawal.accountNo}</TableCell>
+                <TableCell style={{textTransform: 'capitalize'}}>{withdrawal.status}</TableCell>
               </TableRow>
           </TableBody>
         </Table>

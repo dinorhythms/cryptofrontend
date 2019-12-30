@@ -14,7 +14,7 @@ import Skeleton from 'react-loading-skeleton';
 
 import { SET_ERROR } from '../../store/types/notificationTypes';
 import { currencyFormat, formatDate } from '../../utils/helpers';
-import { INVESTMENTS_FETCH, INVESTMENTS_RESOLVE } from '../../store/types/investmentTypes';
+import { WITHDRAWALS_FETCH, WITHDRAWALS_RESOLVE } from '../../store/types/withdrawalsTypes';
 
 const drawerWidth = 240;
 
@@ -66,17 +66,17 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function Investments({history, limit=100}) {
+export default function Withdrawals({history}) {
   const classes = useStyles();
   const { user: { token } } = useSelector(state => state.auth);
-  const { investments, status } = useSelector(state => state.investments);
+  const { withdrawals, status } = useSelector(state => state.withdrawals);
   const dispatch = useDispatch();
   useEffect(() => {
     const getData = async () => {
       try {
-        dispatch({ type: INVESTMENTS_FETCH });
-        const response = await serverRequest(token).get('/investments');
-        dispatch({ type: INVESTMENTS_RESOLVE, payload: response.data.data.investments})
+        dispatch({ type: WITHDRAWALS_FETCH });
+        const response = await serverRequest(token).get('/withdrawals');
+        dispatch({ type: WITHDRAWALS_RESOLVE, payload: response.data.data.withdrawals})
       } catch (error) {
         dispatch({ type: SET_ERROR, payload: error });
       }
@@ -92,29 +92,27 @@ export default function Investments({history, limit=100}) {
     <Grid container spacing={3}>
       <Grid item xs={12}>
       <Paper className={classes.paper}>
-        <Title>Recent Investments</Title>
+        <Title>Recent Withdrawals</Title>
         <Table>
           <TableHead>
             <TableRow>
               <TableCell>Date</TableCell>
-              <TableCell>Start</TableCell>
-              <TableCell>Cashout</TableCell>
               <TableCell>Amount</TableCell>
-              <TableCell>Profit</TableCell>
-              <TableCell>Total</TableCell>
+              <TableCell>Bank</TableCell>
+              <TableCell>Account Name</TableCell>
+              <TableCell>Account Number</TableCell>
               <TableCell>Status</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {investments.length > 0?null:<p>No Record</p>}
-            {investments.slice(0, limit).map(row => (
-              <TableRow key={row.id} hover onClick={() => history.push(`/investments/${row.id}`)} className={classes.tablerow}>
+            {withdrawals.length > 0?null:<p>No Record</p>}
+            {withdrawals.map(row => (
+              <TableRow key={row.id} hover onClick={() => history.push(`/withdrawals/${row.id}`)} className={classes.tablerow}>
                 <TableCell>{formatDate(row.createdAt)}</TableCell>
-                <TableCell>{formatDate(row.startTime)}</TableCell>
-                <TableCell>{formatDate(row.endTime)}</TableCell>
                 <TableCell>{currencyFormat(+row.amount)}</TableCell>
-                <TableCell>{currencyFormat(+row.profit)}</TableCell>
-                <TableCell>{currencyFormat(+row.total)}</TableCell>
+                <TableCell>{row.bankName}</TableCell>
+                <TableCell>{row.accountName}</TableCell>
+                <TableCell>{row.accountNo}</TableCell>
                 <TableCell style={{textTransform: 'capitalize'}}>{row.status}</TableCell>
               </TableRow>
             ))}
