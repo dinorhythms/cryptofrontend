@@ -1,0 +1,4 @@
+export const PLANS_FETCH = 'PLANS_FETCH';
+export const PLANS_RESOLVE = 'PLANS_RESOLVE';
+export const PLANS_REJECT = 'PLANS_REJECT';
+export const PLANS_CANCEL = 'PLANS_CANCEL';

@@ -7,6 +7,8 @@ import investmentsReducer from './investmentsReducer';
 import walletReducer from './walletReducer';
 import withdrawalReducer from './withdrawalReducer';
 import withdrawalsReducer from './withdrawalsReducer';
+import plansReducer from './plansReducer';
+import investReducer from './investReducer';
 
 const rootReducer = combineReducers({
   auth: authReducer,
@@ -15,7 +17,9 @@ const rootReducer = combineReducers({
   investments: investmentsReducer,
   wallet: walletReducer,
   withdrawal: withdrawalReducer,
-  withdrawals: withdrawalsReducer
+  withdrawals: withdrawalsReducer,
+  plans: plansReducer,
+  invest: investReducer
 });
 
 export default rootReducer;

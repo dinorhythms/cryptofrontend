@@ -18,7 +18,7 @@ export const mainListItems = (
       </ListItemIcon>
       <ListItemText primary="Dashboard" />
     </ListItem>
-    <ListItem button>
+    <ListItem button key="Invest" component={NavLink} to="/invest">
       <ListItemIcon>
         <ShoppingCartIcon />
       </ListItemIcon>
