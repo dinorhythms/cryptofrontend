@@ -1,28 +1,25 @@
 import React from "react";
-import { Route, withRouter } from "react-router-dom";
+import { Route, Redirect } from "react-router-dom";
 import { useSelector } from "react-redux";
 
-const PrivateRoute = ({
-	exact,
-	path,
-	component: Component,
-	role,
-  layout: Layout,
-  history
-}) => {
-	const auth = useSelector(state => state.auth);
-  const { isAuthenticated, user } = auth;
+const PrivateRoute = ({ role, Layout, component: Component, ...rest }) => {
 
-  if (!isAuthenticated || (user && !role.includes(user.role))){
-		history.push('/login');
-		return null;
-	}
+	const auth = useSelector(state => state.auth);
+	const { isAuthenticated, user } = auth;
 	
 	return (
-		<Layout history={history} auth={auth}>
-			<Route exact={exact} path={path} component={Component} />
-		</Layout>
-	);
+    <Route
+      {...rest}
+			render={ props => isAuthenticated || (user && role.includes(user.role)) ? 
+				(
+				<Layout auth={auth} {...props}>
+					<Component {...props} />
+				</Layout>
+				):
+				<Redirect to="/login" />
+      }
+    />
+  );
 };
 
-export default withRouter(PrivateRoute);
+export default PrivateRoute;

@@ -2,6 +2,16 @@ import React from "react";
 import { Switch, withRouter } from "react-router-dom";
 import "./App.css";
 
+// views
+import Dashboard from "./pages/dashboard/Dashboard";
+import Investments from "./pages/investments";
+import Investment from "./pages/investments/Investment";
+import SignIn from "./pages/sign-in/SignIn";
+import Signout from "./pages/signout/Signout";
+import Withdrawal from "./pages/withdrawals/withdrawal";
+import Withdrawals from "./pages/withdrawals/withdrawals";
+import Invest from "./pages/invest";
+
 // Routes
 import PrivateRoute from "./services/PrivateRoute";
 import PublicRoute from "./services/PublicRoute";
@@ -9,27 +19,18 @@ import PublicRoute from "./services/PublicRoute";
 // layouts
 import PrivateLayout from "./utils/PrivateLayout";
 
-// views
-import SignIn from "./pages/sign-in/SignIn";
-import Dashboard from "./pages/dashboard/Dashboard";
-import Investments from "./pages/investments";
-import Investment from "./pages/investments/Investment";
-import Withdrawals from "./pages/withdrawals/withdrawals";
-import Withdrawal from "./pages/withdrawals/withdrawal";
-import Signout from "./pages/signout/Signout";
-
-const adminRole = 'admin';
-const employeeRole = 'user';
+const adminRole = "admin";
+const employeeRole = "user";
 
 function App(props) {
 	return (
 		<Switch>
-      <PrivateRoute
+			<PrivateRoute
 				exact={true}
 				path="/dashboard"
 				component={Dashboard}
 				role={[employeeRole, adminRole]}
-				layout={PrivateLayout}
+				Layout={PrivateLayout}
 				{...props}
 			/>
 			<PrivateRoute
@@ -37,7 +38,7 @@ function App(props) {
 				path="/investments"
 				component={Investments}
 				role={[employeeRole, adminRole]}
-				layout={PrivateLayout}
+				Layout={PrivateLayout}
 				{...props}
 			/>
 			<PrivateRoute
@@ -45,7 +46,7 @@ function App(props) {
 				path="/investments/:investmentId"
 				component={Investment}
 				role={[employeeRole, adminRole]}
-				layout={PrivateLayout}
+				Layout={PrivateLayout}
 				{...props}
 			/>
 			<PrivateRoute
@@ -53,7 +54,7 @@ function App(props) {
 				path="/withdrawals"
 				component={Withdrawals}
 				role={[employeeRole, adminRole]}
-				layout={PrivateLayout}
+				Layout={PrivateLayout}
 				{...props}
 			/>
 			<PrivateRoute
@@ -61,7 +62,7 @@ function App(props) {
 				path="/withdrawals/:withdrawalId"
 				component={Withdrawal}
 				role={[employeeRole, adminRole]}
-				layout={PrivateLayout}
+				Layout={PrivateLayout}
 				{...props}
 			/>
 			<PrivateRoute
@@ -69,7 +70,15 @@ function App(props) {
 				path="/signout"
 				component={Signout}
 				role={[employeeRole, adminRole]}
-				layout={PrivateLayout}
+				Layout={PrivateLayout}
+				{...props}
+			/>
+			<PrivateRoute
+				exact={true}
+				path="/invest"
+				component={Invest}
+				role={[employeeRole]}
+				Layout={PrivateLayout}
 				{...props}
 			/>
 			<PublicRoute path="/login" component={SignIn} />
