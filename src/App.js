@@ -7,6 +7,7 @@ import Dashboard from "./pages/dashboard/Dashboard";
 import Investments from "./pages/investments";
 import Investment from "./pages/investments/Investment";
 import SignIn from "./pages/sign-in/SignIn";
+import SignUp from "./pages/signup/Signup";
 import Signout from "./pages/signout/Signout";
 import Withdrawal from "./pages/withdrawals/withdrawal";
 import Withdrawals from "./pages/withdrawals/withdrawals";
@@ -91,6 +92,7 @@ function App(props) {
 				{...props}
 			/>
 			<PublicRoute path="/login" component={SignIn} />
+			<PublicRoute path="/signup" component={SignUp} />
 		</Switch>
 	);
 }
