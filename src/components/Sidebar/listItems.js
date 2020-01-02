@@ -30,7 +30,7 @@ export const mainListItems = (
       </ListItemIcon>
       <ListItemText primary="Investments History" />
     </ListItem>
-    <ListItem button>
+    <ListItem button key="Withdraw" component={NavLink} to="/withdraw">
       <ListItemIcon>
         <BarChartIcon />
       </ListItemIcon>

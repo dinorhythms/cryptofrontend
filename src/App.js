@@ -18,6 +18,7 @@ import PublicRoute from "./services/PublicRoute";
 
 // layouts
 import PrivateLayout from "./utils/PrivateLayout";
+import Withdraw from "./pages/withdrawals/withdraw";
 
 const adminRole = "admin";
 const employeeRole = "user";
@@ -77,6 +78,14 @@ function App(props) {
 				exact={true}
 				path="/invest"
 				component={Invest}
+				role={[employeeRole]}
+				Layout={PrivateLayout}
+				{...props}
+			/>
+			<PrivateRoute
+				exact={true}
+				path="/withdraw"
+				component={Withdraw}
 				role={[employeeRole]}
 				Layout={PrivateLayout}
 				{...props}
