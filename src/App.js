@@ -20,6 +20,8 @@ import PublicRoute from "./services/PublicRoute";
 // layouts
 import PrivateLayout from "./utils/PrivateLayout";
 import Withdraw from "./pages/withdrawals/withdraw";
+import AdminInvestments from "./pages/investments/AdminInvestments";
+import AdminInvestment from "./pages/investments/AdminInvestment";
 
 const adminRole = "admin";
 const employeeRole = "user";
@@ -91,6 +93,26 @@ function App(props) {
 				Layout={PrivateLayout}
 				{...props}
 			/>
+
+			{/* Admin Routes */}
+
+			<PrivateRoute
+				exact={true}
+				path="/admin/investments"
+				component={AdminInvestments}
+				role={[adminRole]}
+				Layout={PrivateLayout}
+				{...props}
+			/>
+			<PrivateRoute
+				exact={true}
+				path="/admin/investments/:investmentId"
+				component={AdminInvestment}
+				role={[adminRole]}
+				Layout={PrivateLayout}
+				{...props}
+			/>
+
 			<PublicRoute path="/login" component={SignIn} />
 			<PublicRoute path="/signup" component={SignUp} />
 		</Switch>

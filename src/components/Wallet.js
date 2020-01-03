@@ -18,8 +18,8 @@ const useStyles = makeStyles({
     marginBottom: '10px'
   },
   amount: {
-    marginBottom: '30px',
-    marginTop: '30px'
+    marginBottom: '20px',
+    marginTop: '20px'
   }
 });
 
@@ -49,6 +49,7 @@ const Wallet = () => {
     <React.Fragment>
       <div style={{textAlign: 'center'}}>
         <Title>Wallet</Title>
+        <small>Oladehinde Kazeem</small>
         <Typography component="p" variant="h4" className={classes.amount}>
           { currencyFormat(wallet.balance) }
         </Typography>

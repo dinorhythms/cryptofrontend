@@ -10,7 +10,7 @@ const PrivateRoute = ({ role, Layout, component: Component, ...rest }) => {
 	return (
     <Route
       {...rest}
-			render={ props => isAuthenticated || (user && role.includes(user.role)) ? 
+			render={ props => isAuthenticated && (user && role.includes(user.role)) ? 
 				(
 				<Layout auth={auth} {...props}>
 					<Component {...props} />
