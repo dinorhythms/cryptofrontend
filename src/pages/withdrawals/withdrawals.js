@@ -105,7 +105,11 @@ export default function Withdrawals({history}) {
             </TableRow>
           </TableHead>
           <TableBody>
-            {withdrawals.length > 0?null:<p>No Record</p>}
+            {withdrawals.length > 0?null:(
+              <TableRow className={classes.tablerow}>
+                <TableCell colSpan={7}>NO RECORD</TableCell>
+              </TableRow>
+            )}
             {withdrawals.map(row => (
               <TableRow key={row.id} hover onClick={() => history.push(`/withdrawals/${row.id}`)} className={classes.tablerow}>
                 <TableCell>{formatDate(row.createdAt)}</TableCell>

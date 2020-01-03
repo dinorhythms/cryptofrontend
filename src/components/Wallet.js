@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import Link from '@material-ui/core/Link';
+import { Link } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Title from './Title';
@@ -10,10 +10,6 @@ import Skeleton from 'react-loading-skeleton';
 import { SET_ERROR } from '../store/types/notificationTypes';
 import { currencyFormat, formatDate } from '../utils/helpers';
 import { WALLET_RESOLVE, WALLET_FETCH } from '../store/types/walletTypes';
-
-function preventDefault(event) {
-  event.preventDefault();
-}
 
 const useStyles = makeStyles({
   depositContext: {
@@ -61,7 +57,7 @@ const Wallet = () => {
          { formatDate(wallet.updatedAt) }
         </Typography>
         <div>
-          <Link color="primary" href="#" onClick={preventDefault}>
+          <Link to="/investments" color="primary">
             View Transactions
           </Link>
         </div>

@@ -106,7 +106,11 @@ export default function Investments({history, limit=100}) {
             </TableRow>
           </TableHead>
           <TableBody>
-            {investments.length > 0?null:<p>No Record</p>}
+            {investments.length > 0?null:(
+                <TableRow className={classes.tablerow}>
+                  <TableCell colSpan={7}>NO RECORD</TableCell>
+                </TableRow>
+            )}
             {investments.slice(0, limit).map(row => (
               <TableRow key={row.id} hover onClick={() => history.push(`/investments/${row.id}`)} className={classes.tablerow}>
                 <TableCell>{formatDate(row.createdAt)}</TableCell>
