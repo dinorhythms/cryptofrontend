@@ -1,4 +1,4 @@
-import { AUTH_FETCH, AUTH_RESOLVE, AUTH_REJECT, AUTH_CANCEL } from '../types/authTypes';
+import { AUTH_FETCH, AUTH_RESOLVE, AUTH_REJECT, AUTH_CANCEL, TOKEN_REFRESH } from '../types/authTypes';
 
 // Initial State
 const initialState = {
@@ -23,6 +23,12 @@ const authReducer = (state = initialState, action) => {
         isAuthenticated: true,
         user: action.payload,
         error: null
+      }
+    }
+    case TOKEN_REFRESH: {
+      return {
+        ...state,
+        user: { ...state.user, ...action.payload },
       }
     }
     case AUTH_REJECT: {

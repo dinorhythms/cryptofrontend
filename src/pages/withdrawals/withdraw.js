@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
@@ -56,7 +56,7 @@ export default function Withdraw({history, match}) {
 
   const [error, setErrror] = useState(false);
   const [amount, setAmount] = useState(0);
-  const [min, setMin] = useState(1000.00);
+  const [min] = useState(1000.00);
   const [bankName, setBankName] = useState(1000.00);
   const [accountName, setAccountName] = useState();
   const [accountNo, setAccountNo] = useState();

@@ -14,7 +14,7 @@ import { PLANS_FETCH, PLANS_RESOLVE } from '../../store/types/plansTypes';
 import { SET_ERROR } from '../../store/types/notificationTypes';
 import { serverRequest } from '../../utils/serverRequest';
 import Skeleton from 'react-loading-skeleton';
-import { currencyFormat, formatDate } from '../../utils/helpers';
+import { currencyFormat } from '../../utils/helpers';
 import { ADD_PLAN } from '../../store/types/investTypes';
 
 const useStyles = makeStyles(theme => ({
