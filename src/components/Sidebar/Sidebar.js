@@ -6,7 +6,7 @@ import List from '@material-ui/core/List';
 import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import { mainListItems, secondaryListItems } from './listItems';
+import { mainListItems, secondaryListItems, adminListItems } from './listItems';
 
 
 const drawerWidth = 240;
@@ -90,7 +90,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function Dashboard({handleDrawerClose, open}) {
+export default function Dashboard({handleDrawerClose, open, role}) {
   const classes = useStyles();
   return (
     <Drawer
@@ -106,7 +106,12 @@ export default function Dashboard({handleDrawerClose, open}) {
         </IconButton>
       </div>
       <Divider />
-      <List>{mainListItems}</List>
+      {role === 'admin'?(
+        <List>{adminListItems}</List>
+      ):(
+        <List>{mainListItems}</List>
+      )}
+      
       <Divider />
       <List>{secondaryListItems}</List>
     </Drawer>

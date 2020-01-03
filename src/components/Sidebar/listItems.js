@@ -45,6 +45,29 @@ export const mainListItems = (
   </React.Fragment>
 )
 
+export const adminListItems = (
+  <React.Fragment>
+    <ListItem button key="Dashboard" component={NavLink} to="/dashboard">
+      <ListItemIcon>
+        <DashboardIcon />
+      </ListItemIcon>
+      <ListItemText primary="Dashboard" />
+    </ListItem>
+    <ListItem button key="Investments" component={NavLink} to="/admin/investments">
+      <ListItemIcon>
+        <AssignmentIcon />
+      </ListItemIcon>
+      <ListItemText primary="Investments" />
+    </ListItem>
+    <ListItem button key="Withdrawals" component={NavLink} to="/withdrawals">
+      <ListItemIcon>
+        <LayersIcon />
+      </ListItemIcon>
+      <ListItemText primary="Withdrawal History" />
+    </ListItem>
+  </React.Fragment>
+)
+
 export const secondaryListItems = (
   <div>
     <ListItem button key="Signout" component={NavLink} to="/signout">

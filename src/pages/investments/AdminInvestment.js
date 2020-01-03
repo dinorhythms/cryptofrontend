@@ -1,25 +1,26 @@
-import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { NavLink } from 'react-router-dom';
-import { makeStyles } from '@material-ui/core/styles';
-import Grid from '@material-ui/core/Grid';
-import Paper from '@material-ui/core/Paper';
-import Title from '../../components/Title';
-import { serverRequest } from '../../utils/serverRequest';
-import Skeleton from 'react-loading-skeleton';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
-import Countdown from 'react-countdown-now';
-import Typography from '@material-ui/core/Typography';
+import Grid from '@material-ui/core/Grid';
+import Paper from '@material-ui/core/Paper';
+import { makeStyles } from '@material-ui/core/styles';
+import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
-import Table from '@material-ui/core/Table';
-
-import { SET_ERROR } from '../../store/types/notificationTypes';
+import Typography from '@material-ui/core/Typography';
+import React, { useEffect } from 'react';
+import Countdown from 'react-countdown-now';
+import Skeleton from 'react-loading-skeleton';
+import { useDispatch, useSelector } from 'react-redux';
+import { NavLink } from 'react-router-dom';
+import Title from '../../components/Title';
+import { INVESTMENT_FETCH, INVESTMENT_RESOLVE, INVESTMENT_CANCEL } from '../../store/types/investmentTypes';
+import { SET_ERROR, SET_SUCCESS } from '../../store/types/notificationTypes';
 import { currencyFormat, formatDate } from '../../utils/helpers';
-import { INVESTMENT_FETCH, INVESTMENT_RESOLVE } from '../../store/types/investmentTypes';
+import { serverRequest } from '../../utils/serverRequest';
+import Button from '@material-ui/core/Button';
+
 
 const useStyles = makeStyles(theme => ({
   count: {
@@ -54,10 +55,13 @@ const useStyles = makeStyles(theme => ({
     display: 'flex',
     flexDirection: 'column',
     overflow: 'auto',
+  },
+  button: {
+    marginBottom: '20px'
   }
 }));
 
-export default function Investment({history, match}) {
+export default function AdminInvestment({history, match}) {
   const classes = useStyles();
   const { user: { token } } = useSelector(state => state.auth);
   const { investment, status } = useSelector(state => state.investment);
@@ -67,7 +71,7 @@ export default function Investment({history, match}) {
     const getData = async () => {
       try {
         dispatch({ type: INVESTMENT_FETCH });
-        const response = await serverRequest(token).get(`/investments/${investmentId}`);
+        const response = await serverRequest(token).get(`/admin/investments/${investmentId}`);
         dispatch({ type: INVESTMENT_RESOLVE, payload: response.data.data.investment})
       } catch (error) {
         dispatch({ type: SET_ERROR, payload: error });
@@ -86,10 +90,34 @@ export default function Investment({history, match}) {
     return <Countdown date={endTime} />
   }
 
+  const handleAdminConfirmation = async() => {
+    try {
+      dispatch({ type: INVESTMENT_FETCH });
+      await serverRequest(token).post(`/admin/investments/${investmentId}`);
+      dispatch({ type: INVESTMENT_CANCEL });
+      dispatch({ type: SET_SUCCESS, payload: "Successful, investment confirmed!" });
+      history.push('/admin/investments')
+    } catch (error) {
+      dispatch({ type: SET_ERROR, payload: error });
+    }
+  }
+  
+  const handleAdminSettle = async() => {
+    try {
+      dispatch({ type: INVESTMENT_FETCH });
+      await serverRequest(token).post(`/admin/investments/${investmentId}/settle`);
+      dispatch({ type: INVESTMENT_CANCEL });
+      dispatch({ type: SET_SUCCESS, payload: "Successful, investment settled!" });
+      history.push('/admin/investments')
+    } catch (error) {
+      dispatch({ type: SET_ERROR, payload: error });
+    }
+  }
+  
   return (
     <Grid container spacing={3}>
       <Grid item xs={12}>
-      <Title><NavLink to="/investments">Back</NavLink> | Investment</Title>
+      <Title><NavLink to="/admin/investments">Back</NavLink> | Investment</Title>
       <Paper className={classes.paper}>
         <Grid container spacing={3}>
           <Grid item>
@@ -153,9 +181,31 @@ export default function Investment({history, match}) {
             </div>
             {investment.endTime <= new Date().toISOString()?(
             <div>
-              <p>Your investment is processing</p>
+              <Button
+                variant="contained"
+                color="secondary"
+                className={classes.button}
+                disabled={status === "loading"}
+                onClick={handleAdminSettle}
+              >
+                {status === 'loading'?"Loading...":"SETTLE"}
+              </Button>
             </div>):null}
-            {investment.status === 'pending'?(<p>Pay to: {investment.payToAccount.accountNo} to get confirmed.</p>):null}
+            {investment.status === 'pending'?(
+            <div>
+              <p>
+                User to: {investment.payToAccount.accountNo} to get confirmed.
+              </p>
+              <Button
+                variant="contained"
+                color="secondary"
+                className={classes.button}
+                disabled={status === "loading"}
+                onClick={handleAdminConfirmation}
+              >
+                {status === 'loading'?"Loading...":"CONFIRM"}
+              </Button>
+            </div>):null}
             <Table>
           <TableHead>
             <TableRow>
