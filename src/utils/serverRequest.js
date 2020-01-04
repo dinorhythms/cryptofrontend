@@ -6,8 +6,7 @@ import { TOKEN_REFRESH } from '../store/types/authTypes';
 export const serverRequest = (token=null) => {
 
   const axiosInst = axios.create({
-    baseURL: 'https://us-central1-cryptofox.cloudfunctions.net/api/v1',
-    // timeout: 8000,
+    baseURL: process.env.REACT_APP_API_URL,
     headers: {
      'Content-Type': 'application/json',
      'Accept': 'application/json',

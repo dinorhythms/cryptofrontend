@@ -137,7 +137,7 @@ const PrivateLayout = props => {
               </Grid>
               <Grid item xs={12} md={4} lg={3}>
                 <Paper className={fixedHeightPaper}>
-                  <Wallet/>
+                  <Wallet fullName={fullName}/>
                 </Paper>
               </Grid>
             </Grid>

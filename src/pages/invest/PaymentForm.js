@@ -32,8 +32,8 @@ export default function PaymentForm() {
       setErrror(true)
     } else {
       setErrror(false)
-      const profit = ((+amount * +selectedPlan.percentage) / 100 - +amount).toFixed(2);
-		  const total = ((+amount * +selectedPlan.percentage) / 100).toFixed(2);
+      const profit = parseFloat((+amount * +selectedPlan.percentage) / 100 - +amount).toFixed(2);
+		  const total = parseFloat((+amount * +selectedPlan.percentage) / 100).toFixed(2);
       dispatch({ type: ADD_AMOUNT, payload: { amount, profit, total } });
     }
     

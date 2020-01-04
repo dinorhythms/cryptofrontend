@@ -22,6 +22,9 @@ import PrivateLayout from "./utils/PrivateLayout";
 import Withdraw from "./pages/withdrawals/withdraw";
 import AdminInvestments from "./pages/investments/AdminInvestments";
 import AdminInvestment from "./pages/investments/AdminInvestment";
+import AdminWithdrawals from "./pages/withdrawals/AdminWithdrawals";
+import AdminWithdrawal from "./pages/withdrawals/AdminWithdrawal";
+import Settings from "./pages/settings/settings";
 
 const adminRole = "admin";
 const employeeRole = "user";
@@ -108,6 +111,30 @@ function App(props) {
 				exact={true}
 				path="/admin/investments/:investmentId"
 				component={AdminInvestment}
+				role={[adminRole]}
+				Layout={PrivateLayout}
+				{...props}
+			/>
+			<PrivateRoute
+				exact={true}
+				path="/admin/withdrawals"
+				component={AdminWithdrawals}
+				role={[adminRole]}
+				Layout={PrivateLayout}
+				{...props}
+			/>
+			<PrivateRoute
+				exact={true}
+				path="/admin/withdrawals/:withdrawalId"
+				component={AdminWithdrawal}
+				role={[adminRole]}
+				Layout={PrivateLayout}
+				{...props}
+			/>
+			<PrivateRoute
+				exact={true}
+				path="/admin/settings"
+				component={Settings}
 				role={[adminRole]}
 				Layout={PrivateLayout}
 				{...props}
