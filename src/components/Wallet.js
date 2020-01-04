@@ -23,7 +23,7 @@ const useStyles = makeStyles({
   }
 });
 
-const Wallet = () => {
+const Wallet = ({fullName}) => {
   const classes = useStyles();
   const { user: { token } } = useSelector(state => state.auth);
   const { wallet, status } = useSelector(state => state.wallet);
@@ -49,7 +49,7 @@ const Wallet = () => {
     <React.Fragment>
       <div style={{textAlign: 'center'}}>
         <Title>Wallet</Title>
-        <small>Oladehinde Kazeem</small>
+        <small>{fullName}</small>
         <Typography component="p" variant="h4" className={classes.amount}>
           { currencyFormat(wallet.balance) }
         </Typography>

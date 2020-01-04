@@ -9,6 +9,7 @@ import LayersIcon from '@material-ui/icons/Layers';
 import AssignmentIcon from '@material-ui/icons/Assignment';
 import { NavLink } from 'react-router-dom';
 import LockOpenIcon from '@material-ui/icons/LockOpen';
+import SettingsIcon from '@material-ui/icons/Settings';
 
 export const mainListItems = (
   <React.Fragment>
@@ -59,11 +60,17 @@ export const adminListItems = (
       </ListItemIcon>
       <ListItemText primary="Investments" />
     </ListItem>
-    <ListItem button key="Withdrawals" component={NavLink} to="/withdrawals">
+    <ListItem button key="Withdrawals" component={NavLink} to="/admin/withdrawals">
       <ListItemIcon>
         <LayersIcon />
       </ListItemIcon>
       <ListItemText primary="Withdrawal History" />
+    </ListItem>
+    <ListItem button key="settings" component={NavLink} to="/admin/settings">
+      <ListItemIcon>
+        <SettingsIcon />
+      </ListItemIcon>
+      <ListItemText primary="Settings" />
     </ListItem>
   </React.Fragment>
 )
